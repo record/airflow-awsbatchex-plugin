@@ -1,13 +1,14 @@
 from airflow.contrib.operators.awsbatch_operator import AWSBatchOperator
 from airflow.plugins_manager import AirflowPlugin
+from airflow.utils import apply_defaults
 
 
 class AWSBatchExOperator(AWSBatchOperator):
-    template_fields = AWSBatchOperator.template_fields + ("parameters",)
+    template_fields = AWSBatchOperator.template_fields + ("job_queue", "parameters")
 
     @apply_defaults
-    def __init__(self, parameters=None):
-        super().__init__(**kwargs)
+    def __init__(self, parameters=None, **kwargs):
+        super(AWSBatchExOperator, self).__init__(**kwargs)
 
         self.parameters = parameters
 
